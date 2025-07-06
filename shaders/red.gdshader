@@ -7,7 +7,7 @@ void vertex() {
 void fragment() {
 	UV; // uv gives the actual position of the pixel in (0,0) to (1,1)
 	COLOR = vec4(1.0,0.0,0.0,1.0);
-	
+
 	// Called for every pixel the material is visible on.
 }
 

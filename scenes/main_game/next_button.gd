@@ -7,7 +7,7 @@ class_name NextButton
 
 @export var source_text: TextureRect
 @export var target_text: TextureRect
-@export var text_editor: TextEdit
+@export var code_editor: CodeEdit
 
 @export_range(0, 20) var debug_index: int = -1 :
 	set(value):
@@ -34,7 +34,7 @@ func _on_pressed() -> void:
 func change_level(new_index: int) -> void:
 	var level = list_levels[new_index]
 	if list_levels[new_index].editor_text != "":
-		text_editor.text = level.editor_text
+		code_editor.text = level.editor_text
 
 	target_text.material = level.material
 	

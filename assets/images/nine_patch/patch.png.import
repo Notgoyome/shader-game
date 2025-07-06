@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk6tybk7tqcva"
-path="res://.godot/imported/globs.png-af09912d10c6288712e876ed0b2d44bb.ctex"
+uid="uid://d24jw537n2m08"
+path="res://.godot/imported/patch.png-5db6d6922458430aeab71aa7035d4601.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/globs.png"
-dest_files=["res://.godot/imported/globs.png-af09912d10c6288712e876ed0b2d44bb.ctex"]
+source_file="res://assets/images/nine_patch/patch.png"
+dest_files=["res://.godot/imported/patch.png-5db6d6922458430aeab71aa7035d4601.ctex"]
 
 [params]
 

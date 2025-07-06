@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7qaytagv8vho"
-path="res://.godot/imported/globs_normaL.png-e33ad7f62405194695a484bef674a1c7.ctex"
+uid="uid://dgr4v1xxubvs2"
+path="res://.godot/imported/button.png-f74cc4e5740925d6d589e9befb2bcb21.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/globs_normaL.png"
-dest_files=["res://.godot/imported/globs_normaL.png-e33ad7f62405194695a484bef674a1c7.ctex"]
+source_file="res://assets/images/nine_patch/button.png"
+dest_files=["res://.godot/imported/button.png-f74cc4e5740925d6d589e9befb2bcb21.ctex"]
 
 [params]
 

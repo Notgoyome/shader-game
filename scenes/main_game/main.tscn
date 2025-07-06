@@ -1,23 +1,28 @@
-[gd_scene load_steps=41 format=3 uid="uid://ct8p20kf2yfab"]
+[gd_scene load_steps=53 format=3 uid="uid://ct8p20kf2yfab"]
 
 [ext_resource type="Script" uid="uid://df3pm3c7odloe" path="res://scenes/main_game/main_game.gd" id="1_jrcp4"]
 [ext_resource type="Shader" uid="uid://bjv5sqem6r3we" path="res://shaders/uv.gdshader" id="2_4itb4"]
+[ext_resource type="Shader" uid="uid://db6gtp6lwo83q" path="res://shaders/red.gdshader" id="2_xg5l4"]
+[ext_resource type="StyleBox" uid="uid://blj5j32jw3b6f" path="res://assets/panel.tres" id="3_5dpwn"]
 [ext_resource type="Shader" uid="uid://dixj12ffmromg" path="res://shaders/outline.gdshader" id="3_657ci"]
 [ext_resource type="Shader" uid="uid://doneo32nej4ij" path="res://scenes/main_game/upside_down_globs.gdshader" id="3_lk3h4"]
 [ext_resource type="Script" uid="uid://4auslm5a78b6" path="res://scenes/main_game/score.gd" id="4_4itb4"]
+[ext_resource type="Theme" uid="uid://c6v2fikpfv1ev" path="res://assets/theme.tres" id="4_ofw88"]
 [ext_resource type="Script" uid="uid://cmbs3ussphild" path="res://scenes/main_game/comparer_component.gd" id="4_vqxfw"]
 [ext_resource type="Script" uid="uid://bd35a332xs07c" path="res://scenes/main_game/next_button.gd" id="5_odwdu"]
+[ext_resource type="CodeHighlighter" uid="uid://csopn3wtwcpax" path="res://assets/godot_shader_repaired.tres" id="5_xg5l4"]
 [ext_resource type="Shader" uid="uid://cfa20wkvjwx88" path="res://shaders/strip.gdshader" id="7_ece3q"]
 [ext_resource type="Shader" uid="uid://8ijm12afgnnm" path="res://shaders/chess.gdshader" id="8_6mgeo"]
 [ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="9_6mgeo"]
 [ext_resource type="Resource" uid="uid://74n16upsfm6p" path="res://resources/levels/red.tres" id="10_4l6km"]
 [ext_resource type="Shader" uid="uid://crwo48xdlvvgc" path="res://shaders/reverse_colors_globs.gdshader" id="11_8dyyo"]
-[ext_resource type="Texture2D" uid="uid://dk6tybk7tqcva" path="res://assets/globs.png" id="11_lk3h4"]
-[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/globs_normaL.png" id="12_fsiif"]
+[ext_resource type="Texture2D" uid="uid://dk6tybk7tqcva" path="res://assets/images/globs.png" id="11_lk3h4"]
+[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="12_fsiif"]
 [ext_resource type="Shader" uid="uid://c71n53da8t7ec" path="res://shaders/globs_purple.gdshader" id="12_lk3h4"]
-[ext_resource type="Texture2D" uid="uid://dsu2viwhw7hxr" path="res://assets/globs_no_outline.png" id="14_4tna4"]
+[ext_resource type="Texture2D" uid="uid://dsu2viwhw7hxr" path="res://assets/images/globs_no_outline.png" id="14_4tna4"]
+[ext_resource type="Script" uid="uid://gq2koma2ojj4" path="res://scenes/main_game/text_editor.gd" id="17_1xfs6"]
 
-[sub_resource type="Shader" id="Shader_4tna4"]
+[sub_resource type="Shader" id="Shader_xg5l4"]
 code = "shader_type canvas_item;
 // check godot documentation for shaders
 
@@ -27,27 +32,23 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_657ci"]
-shader = SubResource("Shader_4tna4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g06uj"]
+shader = SubResource("Shader_xg5l4")
 
-[sub_resource type="Shader" id="Shader_657ci"]
-code = "shader_type canvas_item;
-const float SIZE = 16.0;
-uniform sampler2D noise_texture: hint_normal;
-void fragment() {
-	float pixel_pos_normalized = 1.0 / SIZE;
-    vec4 color = texture(TEXTURE,UV);
-	// check if surrounding pixel is alpha 1.0 atleast
-	float is_transparent = 1.0 - color.a;
-	float should_outline = (texture(TEXTURE,vec2(UV.x+pixel_pos_normalized, UV.y)).a + 
-							texture(TEXTURE,vec2(UV.x-pixel_pos_normalized, UV.y)).a + 
-							texture(TEXTURE,vec2(UV.x, UV.y + pixel_pos_normalized)).a +
-							texture(TEXTURE,vec2(UV.x, UV.y - +pixel_pos_normalized)).a);
-	COLOR = mix(color, vec4(vec3(0.0),should_outline), is_transparent);
-}"
+[sub_resource type="CanvasTexture" id="CanvasTexture_n5x6j"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hh8jm"]
-shader = SubResource("Shader_657ci")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5x6j"]
+shader = ExtResource("2_xg5l4")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5dpwn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ofw88"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xg5l4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cxss"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5c3cp"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ece3q"]
 
@@ -189,6 +190,25 @@ material = SubResource("ShaderMaterial_5c3cp")
 base_texture = ExtResource("14_4tna4")
 metadata/_custom_type_script = "uid://dygt2ra6plsde"
 
+[sub_resource type="Shader" id="Shader_657ci"]
+code = "shader_type canvas_item;
+const float SIZE = 16.0;
+uniform sampler2D noise_texture: hint_normal;
+void fragment() {
+	float pixel_pos_normalized = 1.0 / SIZE;
+    vec4 color = texture(TEXTURE,UV);
+	// check if surrounding pixel is alpha 1.0 atleast
+	float is_transparent = 1.0 - color.a;
+	float should_outline = (texture(TEXTURE,vec2(UV.x+pixel_pos_normalized, UV.y)).a + 
+							texture(TEXTURE,vec2(UV.x-pixel_pos_normalized, UV.y)).a + 
+							texture(TEXTURE,vec2(UV.x, UV.y + pixel_pos_normalized)).a +
+							texture(TEXTURE,vec2(UV.x, UV.y - +pixel_pos_normalized)).a);
+	COLOR = mix(color, vec4(vec3(0.0),should_outline), is_transparent);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hh8jm"]
+shader = SubResource("Shader_657ci")
+
 [sub_resource type="Resource" id="Resource_5dpwn"]
 script = ExtResource("9_6mgeo")
 editor_text = "shader_type canvas_item;
@@ -199,10 +219,10 @@ void fragment() {
     vec4 color = texture(TEXTURE,UV + 4.0 * pixel_pos_normalized);
 	COLOR = color;
 }"
-name = "outline"
+name = "TEST NONE"
 shader = SubResource("Shader_657ci")
 material = SubResource("ShaderMaterial_hh8jm")
-base_texture = ExtResource("12_fsiif")
+base_texture = ExtResource("14_4tna4")
 metadata/_custom_type_script = "uid://dygt2ra6plsde"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vqxfw"]
@@ -228,7 +248,7 @@ size = Vector2i(16, 16)
 
 [node name="MyShader" type="TextureRect" parent="SourceViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_657ci")
+material = SubResource("ShaderMaterial_g06uj")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -242,8 +262,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("12_fsiif")
-expand_mode = 2
+texture = SubResource("CanvasTexture_n5x6j")
 
 [node name="TargetViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true
@@ -252,7 +271,7 @@ size = Vector2i(16, 16)
 
 [node name="TargetShader" type="TextureRect" parent="TargetViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_hh8jm")
+material = SubResource("ShaderMaterial_n5x6j")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -266,105 +285,140 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("12_fsiif")
-expand_mode = 2
+texture = SubResource("CanvasTexture_n5x6j")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Panel" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="Panel" type="Panel" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Panel2" type="Panel" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("3_5dpwn")
 
-[node name="TextEditor" type="TextEdit" parent="HBoxContainer/Panel"]
+[node name="Score" type="Label" parent="Panel/HBoxContainer/Panel2"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "shader_type canvas_item;
-const float SIZE = 16.0;
-
-void fragment() {
-	float pixel_pos_normalized = 1.0 / SIZE;
-    vec4 color = texture(TEXTURE,UV + 4.0 * pixel_pos_normalized);
-	COLOR = color;
-}"
-
-[node name="Score" type="Label" parent="HBoxContainer/Panel"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
+layout_mode = 2
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -81.0
-offset_top = 3.0
-offset_right = -3.0
-offset_bottom = 15.0
+offset_left = -300.0
+offset_top = 32.0
+offset_right = -108.0
+offset_bottom = 83.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 64
 text = "Score: 0"
 horizontal_alignment = 2
 script = ExtResource("4_4itb4")
 
-[node name="NextButton" type="Button" parent="HBoxContainer/Panel" node_paths=PackedStringArray("comparer_component", "source_text", "target_text", "text_editor")]
+[node name="CodeEditor" type="CodeEdit" parent="Panel/HBoxContainer/Panel2"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5dpwn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ofw88")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_xg5l4")
+theme_override_styles/completion = SubResource("StyleBoxEmpty_5cxss")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5c3cp")
+text = "shader_type canvas_item;
+// check godot documentation for shaders
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	COLOR = vec4(1.0,1.0,1.0,1.0);
+}
+"
+minimap_draw = true
+syntax_highlighter = ExtResource("5_xg5l4")
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_tabs = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+code_completion_enabled = true
+indent_use_spaces = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+script = ExtResource("17_1xfs6")
+
+[node name="NextButton" type="Button" parent="Panel/HBoxContainer/Panel2" node_paths=PackedStringArray("comparer_component", "source_text", "target_text", "code_editor")]
 layout_mode = 0
-offset_left = 1285.0
-offset_top = 918.0
-offset_right = 1570.0
-offset_bottom = 1059.0
+offset_left = 1368.0
+offset_top = 856.0
+offset_right = 1504.0
+offset_bottom = 992.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_ofw88")
 theme_override_font_sizes/font_size = 64
 disabled = true
 text = "NEXT"
 script = ExtResource("5_odwdu")
-comparer_component = NodePath("../../../ComparerComponent")
+comparer_component = NodePath("../../../../ComparerComponent")
 list_levels = Array[ExtResource("9_6mgeo")]([ExtResource("10_4l6km"), SubResource("Resource_4l6km"), SubResource("Resource_8dyyo"), SubResource("Resource_lk3h4"), SubResource("Resource_4tna4"), SubResource("Resource_ip0mq"), SubResource("Resource_657ci"), SubResource("Resource_1xfs6"), SubResource("Resource_5dpwn")])
-source_text = NodePath("../../../SourceViewport/MyShader")
-target_text = NodePath("../../../TargetViewport/TargetShader")
-text_editor = NodePath("../TextEditor")
-debug_index = 8
+source_text = NodePath("../../../../SourceViewport/MyShader")
+target_text = NodePath("../../../../TargetViewport/TargetShader")
+code_editor = NodePath("../CodeEditor")
+debug_index = 0
 
-[node name="Preview" type="PanelContainer" parent="HBoxContainer"]
+[node name="Preview" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
+theme_override_styles/panel = ExtResource("3_5dpwn")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/Preview"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/Preview"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
 
-[node name="Panel2" type="MarginContainer" parent="HBoxContainer/Preview/VBoxContainer2"]
+[node name="Panel2" type="MarginContainer" parent="Panel/HBoxContainer/Preview/VBoxContainer2"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Preview/VBoxContainer2/Panel2"]
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Preview/VBoxContainer2/Panel2"]
 texture_filter = 1
 custom_minimum_size = Vector2(192, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 texture = SubResource("ViewportTexture_vqxfw")
 
-[node name="Panel4" type="MarginContainer" parent="HBoxContainer/Preview/VBoxContainer2"]
+[node name="Panel4" type="MarginContainer" parent="Panel/HBoxContainer/Preview/VBoxContainer2"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Preview/VBoxContainer2/Panel4"]
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Preview/VBoxContainer2/Panel4"]
 texture_filter = 1
 custom_minimum_size = Vector2(192, 192)
 layout_mode = 2
 texture = SubResource("ViewportTexture_4itb4")
 
-[node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/Preview/VBoxContainer2"]
+[node name="ColorPicker" type="ColorPicker" parent="Panel/HBoxContainer/Preview/VBoxContainer2"]
 layout_mode = 2
 color_mode = 2
 
@@ -374,8 +428,8 @@ source_rect = NodePath("../SourceViewport")
 target_rect = NodePath("../TargetViewport")
 
 [connection signal="shader_changed" from="." to="ComparerComponent" method="_on_control_shader_changed"]
-[connection signal="text_changed" from="HBoxContainer/Panel/TextEditor" to="." method="_on_text_editor_text_changed"]
-[connection signal="pressed" from="HBoxContainer/Panel/NextButton" to="HBoxContainer/Panel/NextButton" method="_on_pressed"]
-[connection signal="compare_done" from="ComparerComponent" to="HBoxContainer/Panel/Score" method="_on_comparer_component_compare_done"]
-[connection signal="compare_done" from="ComparerComponent" to="HBoxContainer/Panel/NextButton" method="_on_comparer_component_compare_done"]
-[connection signal="on_percentage_all" from="ComparerComponent" to="HBoxContainer/Panel/NextButton" method="_on_comparer_component_on_percentage_all"]
+[connection signal="text_changed" from="Panel/HBoxContainer/Panel2/CodeEditor" to="." method="_on_text_editor_text_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Panel2/NextButton" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_pressed"]
+[connection signal="compare_done" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/Score" method="_on_comparer_component_compare_done"]
+[connection signal="compare_done" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_comparer_component_compare_done"]
+[connection signal="on_percentage_all" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_comparer_component_on_percentage_all"]

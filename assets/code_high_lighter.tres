@@ -1,0 +1,14 @@
+[gd_resource type="CodeHighlighter" format=3 uid="uid://dgyvrk5okpqsg"]
+
+[resource]
+number_color = Color(0.580717, 0.75067, 0.135838, 1)
+symbol_color = Color(1, 1, 1, 1)
+function_color = Color(0.378713, 0.63027, 0.999995, 1)
+member_variable_color = Color(1, 1, 1, 1)
+keyword_colors = {
+"UV": Color(0.12549, 0.839216, 0.780392, 1)
+}
+color_regions = {
+"/* */": Color(0.0784314, 0.627451, 0.180392, 1),
+"//": Color(0.0784314, 0.627451, 0.180392, 1)
+}

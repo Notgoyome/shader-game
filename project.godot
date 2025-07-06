@@ -23,6 +23,10 @@ window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom_font="uid://bvnye1tmk1ibj"
+
 [input]
 
 run={
@@ -33,5 +37,7 @@ run={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.0784314, 0.203922, 0.392157, 1)

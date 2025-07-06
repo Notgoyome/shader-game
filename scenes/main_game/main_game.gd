@@ -5,7 +5,7 @@ class_name MainGame
 @onready var source_viewport: SubViewport = %SourceViewport
 @onready var target_viewport: SubViewport = %TargetViewport
 
-@onready var text_editor: TextEdit = %TextEditor
+@onready var code_editor: TextEdit = %CodeEditor
 @onready var my_shader: TextureRect = %MyShader
 @onready var target_shader: TextureRect = %TargetShader
 @export var canvas_size: Vector2 = Vector2(32, 32) :
@@ -36,10 +36,16 @@ func _on_text_editor_text_changed() -> void:
 func set_new_shader():
 	var new_shader: Shader = Shader.new()
 
-	new_shader.code = text_editor.text
-	var shader_material : Material = ShaderMaterial.new()
-	shader_material.shader = new_shader
+	new_shader.code = code_editor.text
+	
+	var shader_material : ShaderMaterial = ShaderMaterial.new()
+	shader_material.shader = new_shader #here error
 	my_shader.material = shader_material
+
+	#HACK: find a way to check if the shader is compiled
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
 	await get_tree().process_frame
 	await get_tree().process_frame
 
