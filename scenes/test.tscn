@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://672yf84wwmln"]
+
+[ext_resource type="Script" uid="uid://bk3m31erpiib6" path="res://scenes/color_rect.gd" id="1_errlg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bl13t"]
+
+[sub_resource type="Shader" id="Shader_ofw88"]
+code = "shader_type canvas_item;
+const float SIZE = 16.0;
+uniform sampler2D noise_texture: hint_normal;
+void fragment() {
+	float pixel_pos_normalized = 1.0 / SIZE;
+    vec4 color = texture(TEXTURE,UV);
+	vec4 color_noise = texture(noise_texture, UV);
+	float is_right_side = float(UV.x>0.5);
+	COLOR = mix(color, color_noise, is_right_side);
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ofw88"]
+noise_type = 2
+frequency = 0.0322
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xg5l4"]
+noise = SubResource("FastNoiseLite_ofw88")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_errlg"]
+shader = SubResource("Shader_ofw88")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_xg5l4")
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_bl13t")
+layout_mode = 0
+offset_right = 848.0
+offset_bottom = 656.0
+script = ExtResource("1_errlg")
+new_material = SubResource("ShaderMaterial_errlg")

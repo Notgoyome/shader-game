@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Level" load_steps=8 format=3 uid="uid://lfdocou3rvlm"]
+
+[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="1_2736w"]
+[ext_resource type="Shader" uid="uid://b08sb4a6lbh75" path="res://shaders/right_noise.gdshader" id="2_8ex0p"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="3_rreyj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ofw88"]
+noise_type = 2
+frequency = 0.0322
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xg5l4"]
+noise = SubResource("FastNoiseLite_ofw88")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g06uj"]
+shader = ExtResource("2_8ex0p")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_xg5l4")
+
+[sub_resource type="Shader" id="Shader_657ci"]
+code = "shader_type canvas_item;
+const float SIZE = 16.0;
+uniform sampler2D noise_texture: hint_normal;
+void fragment() {
+	float pixel_pos_normalized = 1.0 / SIZE;
+    vec4 color = texture(TEXTURE,UV);
+	// check if surrounding pixel is alpha 1.0 atleast
+	float is_transparent = 1.0 - color.a;
+	float should_outline = (texture(TEXTURE,vec2(UV.x+pixel_pos_normalized, UV.y)).a + 
+							texture(TEXTURE,vec2(UV.x-pixel_pos_normalized, UV.y)).a + 
+							texture(TEXTURE,vec2(UV.x, UV.y + pixel_pos_normalized)).a +
+							texture(TEXTURE,vec2(UV.x, UV.y - +pixel_pos_normalized)).a);
+	COLOR = mix(color, vec4(vec3(0.0),should_outline), is_transparent);
+}"
+
+[resource]
+script = ExtResource("3_rreyj")
+editor_text = "shader_type canvas_item;
+const float SIZE = 16.0;
+
+void fragment() {
+	float pixel_pos_normalized = 1.0 / SIZE;
+    vec4 color = texture(TEXTURE,UV);
+	COLOR = color;
+}"
+name = "TEST NONE"
+shader = SubResource("Shader_657ci")
+material = SubResource("ShaderMaterial_g06uj")
+base_texture = ExtResource("1_2736w")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

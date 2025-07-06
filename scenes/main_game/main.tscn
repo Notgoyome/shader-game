@@ -1,10 +1,8 @@
-[gd_scene load_steps=53 format=3 uid="uid://ct8p20kf2yfab"]
+[gd_scene load_steps=45 format=3 uid="uid://ct8p20kf2yfab"]
 
 [ext_resource type="Script" uid="uid://df3pm3c7odloe" path="res://scenes/main_game/main_game.gd" id="1_jrcp4"]
 [ext_resource type="Shader" uid="uid://bjv5sqem6r3we" path="res://shaders/uv.gdshader" id="2_4itb4"]
-[ext_resource type="Shader" uid="uid://db6gtp6lwo83q" path="res://shaders/red.gdshader" id="2_xg5l4"]
 [ext_resource type="StyleBox" uid="uid://blj5j32jw3b6f" path="res://assets/panel.tres" id="3_5dpwn"]
-[ext_resource type="Shader" uid="uid://dixj12ffmromg" path="res://shaders/outline.gdshader" id="3_657ci"]
 [ext_resource type="Shader" uid="uid://doneo32nej4ij" path="res://scenes/main_game/upside_down_globs.gdshader" id="3_lk3h4"]
 [ext_resource type="Script" uid="uid://4auslm5a78b6" path="res://scenes/main_game/score.gd" id="4_4itb4"]
 [ext_resource type="Theme" uid="uid://c6v2fikpfv1ev" path="res://assets/theme.tres" id="4_ofw88"]
@@ -19,26 +17,19 @@
 [ext_resource type="Texture2D" uid="uid://dk6tybk7tqcva" path="res://assets/images/globs.png" id="11_lk3h4"]
 [ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="12_fsiif"]
 [ext_resource type="Shader" uid="uid://c71n53da8t7ec" path="res://shaders/globs_purple.gdshader" id="12_lk3h4"]
-[ext_resource type="Texture2D" uid="uid://dsu2viwhw7hxr" path="res://assets/images/globs_no_outline.png" id="14_4tna4"]
+[ext_resource type="Resource" uid="uid://xhb47v31b7w4" path="res://scenes/main_game/purple_globs.tres" id="15_ofw88"]
 [ext_resource type="Script" uid="uid://gq2koma2ojj4" path="res://scenes/main_game/text_editor.gd" id="17_1xfs6"]
+[ext_resource type="Resource" uid="uid://bcipikrmipv27" path="res://resources/levels/outline.tres" id="19_ofw88"]
+[ext_resource type="Resource" uid="uid://lfdocou3rvlm" path="res://resources/levels/noise.tres" id="20_xg5l4"]
 
 [sub_resource type="Shader" id="Shader_xg5l4"]
-code = "shader_type canvas_item;
-// check godot documentation for shaders
 
-void fragment() {
-	// Called for every pixel the material is visible on.
-	COLOR = vec4(1.0,1.0,1.0,1.0);
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g06uj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5c3cp"]
+render_priority = 0
 shader = SubResource("Shader_xg5l4")
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_n5x6j"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5x6j"]
-shader = ExtResource("2_xg5l4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofw88"]
+shader = ExtResource("12_lk3h4")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5dpwn"]
 
@@ -120,25 +111,6 @@ material = SubResource("ShaderMaterial_5dpwn")
 base_texture = SubResource("CanvasTexture_8dyyo")
 metadata/_custom_type_script = "uid://dygt2ra6plsde"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofw88"]
-shader = ExtResource("12_lk3h4")
-
-[sub_resource type="Resource" id="Resource_4tna4"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-const vec3 PURPLE = vec3(0.625, 0.231, 0.894);
-const vec3 DARK_PURPLE = vec3(0.294, 0.184, 0.566);
-
-void fragment() {
-// althought it's not recommended, you can use \"if\" if you need it :>
-}
-"
-name = "outline"
-shader = ExtResource("12_lk3h4")
-material = SubResource("ShaderMaterial_ofw88")
-base_texture = ExtResource("11_lk3h4")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xg5l4"]
 shader = ExtResource("11_8dyyo")
 
@@ -171,60 +143,6 @@ material = SubResource("ShaderMaterial_5cxss")
 base_texture = ExtResource("12_fsiif")
 metadata/_custom_type_script = "uid://dygt2ra6plsde"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5c3cp"]
-shader = ExtResource("3_657ci")
-
-[sub_resource type="Resource" id="Resource_1xfs6"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-const float SIZE = 16.0;
-
-void fragment() {
-	float pixel_pos_normalized = 1.0 / SIZE;
-    vec4 color = texture(TEXTURE,UV + 4.0 * pixel_pos_normalized);
-	COLOR = color;
-}"
-name = "outline"
-shader = ExtResource("3_657ci")
-material = SubResource("ShaderMaterial_5c3cp")
-base_texture = ExtResource("14_4tna4")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
-[sub_resource type="Shader" id="Shader_657ci"]
-code = "shader_type canvas_item;
-const float SIZE = 16.0;
-uniform sampler2D noise_texture: hint_normal;
-void fragment() {
-	float pixel_pos_normalized = 1.0 / SIZE;
-    vec4 color = texture(TEXTURE,UV);
-	// check if surrounding pixel is alpha 1.0 atleast
-	float is_transparent = 1.0 - color.a;
-	float should_outline = (texture(TEXTURE,vec2(UV.x+pixel_pos_normalized, UV.y)).a + 
-							texture(TEXTURE,vec2(UV.x-pixel_pos_normalized, UV.y)).a + 
-							texture(TEXTURE,vec2(UV.x, UV.y + pixel_pos_normalized)).a +
-							texture(TEXTURE,vec2(UV.x, UV.y - +pixel_pos_normalized)).a);
-	COLOR = mix(color, vec4(vec3(0.0),should_outline), is_transparent);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hh8jm"]
-shader = SubResource("Shader_657ci")
-
-[sub_resource type="Resource" id="Resource_5dpwn"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-const float SIZE = 16.0;
-
-void fragment() {
-	float pixel_pos_normalized = 1.0 / SIZE;
-    vec4 color = texture(TEXTURE,UV + 4.0 * pixel_pos_normalized);
-	COLOR = color;
-}"
-name = "TEST NONE"
-shader = SubResource("Shader_657ci")
-material = SubResource("ShaderMaterial_hh8jm")
-base_texture = ExtResource("14_4tna4")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_vqxfw"]
 viewport_path = NodePath("SourceViewport")
 
@@ -248,7 +166,7 @@ size = Vector2i(16, 16)
 
 [node name="MyShader" type="TextureRect" parent="SourceViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_g06uj")
+material = SubResource("ShaderMaterial_5c3cp")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -262,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = SubResource("CanvasTexture_n5x6j")
+texture = ExtResource("11_lk3h4")
 
 [node name="TargetViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true
@@ -271,7 +189,7 @@ size = Vector2i(16, 16)
 
 [node name="TargetShader" type="TextureRect" parent="TargetViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_n5x6j")
+material = SubResource("ShaderMaterial_ofw88")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -285,7 +203,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = SubResource("CanvasTexture_n5x6j")
+texture = ExtResource("11_lk3h4")
 
 [node name="Panel" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -343,11 +261,11 @@ theme_override_styles/read_only = SubResource("StyleBoxEmpty_xg5l4")
 theme_override_styles/completion = SubResource("StyleBoxEmpty_5cxss")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5c3cp")
 text = "shader_type canvas_item;
-// check godot documentation for shaders
+const vec3 PURPLE = vec3(0.625, 0.231, 0.894);
+const vec3 DARK_PURPLE = vec3(0.294, 0.184, 0.566);
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-	COLOR = vec4(1.0,1.0,1.0,1.0);
+// althought it's not recommended, you can use \"if\" if you need it :>
 }
 "
 minimap_draw = true
@@ -379,11 +297,11 @@ disabled = true
 text = "NEXT"
 script = ExtResource("5_odwdu")
 comparer_component = NodePath("../../../../ComparerComponent")
-list_levels = Array[ExtResource("9_6mgeo")]([ExtResource("10_4l6km"), SubResource("Resource_4l6km"), SubResource("Resource_8dyyo"), SubResource("Resource_lk3h4"), SubResource("Resource_4tna4"), SubResource("Resource_ip0mq"), SubResource("Resource_657ci"), SubResource("Resource_1xfs6"), SubResource("Resource_5dpwn")])
+list_levels = Array[ExtResource("9_6mgeo")]([ExtResource("10_4l6km"), SubResource("Resource_4l6km"), SubResource("Resource_8dyyo"), SubResource("Resource_lk3h4"), ExtResource("15_ofw88"), SubResource("Resource_ip0mq"), SubResource("Resource_657ci"), ExtResource("19_ofw88"), ExtResource("20_xg5l4")])
 source_text = NodePath("../../../../SourceViewport/MyShader")
 target_text = NodePath("../../../../TargetViewport/TargetShader")
 code_editor = NodePath("../CodeEditor")
-debug_index = 0
+debug_index = 4
 
 [node name="Preview" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2

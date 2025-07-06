@@ -38,9 +38,8 @@ func set_new_shader():
 
 	new_shader.code = code_editor.text
 	
-	var shader_material : ShaderMaterial = ShaderMaterial.new()
-	shader_material.shader = new_shader #here error
-	my_shader.material = shader_material
+	# shader_material.shader = new_shader #here error
+	my_shader.material.shader = new_shader
 
 	#HACK: find a way to check if the shader is compiled
 	await get_tree().process_frame

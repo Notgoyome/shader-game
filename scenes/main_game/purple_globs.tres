@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://xhb47v31b7w4"]
+
+[ext_resource type="Texture2D" uid="uid://dk6tybk7tqcva" path="res://assets/images/globs.png" id="1_ypth3"]
+[ext_resource type="Shader" uid="uid://c71n53da8t7ec" path="res://shaders/globs_purple.gdshader" id="2_johrt"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="3_80uxm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofw88"]
+shader = ExtResource("2_johrt")
+
+[resource]
+script = ExtResource("3_80uxm")
+editor_text = "shader_type canvas_item;
+const vec3 PURPLE = vec3(0.625, 0.231, 0.894);
+const vec3 DARK_PURPLE = vec3(0.294, 0.184, 0.566);
+
+void fragment() {
+// althought it's not recommended, you can use \"if\" if you need it :>
+}
+"
+name = "outline"
+shader = ExtResource("2_johrt")
+material = SubResource("ShaderMaterial_ofw88")
+base_texture = ExtResource("1_ypth3")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

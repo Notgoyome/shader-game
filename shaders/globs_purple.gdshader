@@ -6,7 +6,7 @@ void fragment() {
 	if ((COLOR.rgb == vec3(1.0, 0.0, 0.0))) {
 		COLOR.rgb = PURPLE;
 	};
-	if (distance(COLOR.rgb,vec3(1, 0.0, 1)) < 0.1) {
+	if (COLOR.rgb == vec3(1, 0.0, 1)) {
 		COLOR.rgb = DARK_PURPLE;
 	};
 }

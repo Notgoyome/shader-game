@@ -36,10 +36,14 @@ func change_level(new_index: int) -> void:
 	if list_levels[new_index].editor_text != "":
 		code_editor.text = level.editor_text
 
+	source_text.material = level.material.duplicate(true)
+	source_text.material.shader = Shader.new()
 	target_text.material = level.material
 	
 	source_text.texture = level.base_texture
 	target_text.texture = level.base_texture
+
+	Global.set_current_level(level)
 
 func _on_comparer_component_on_percentage_all() -> void:
 	disabled = false
