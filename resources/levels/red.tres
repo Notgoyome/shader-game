@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://74n16upsfm6p"]
+
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="1_n5x6j"]
+[ext_resource type="Shader" uid="uid://db6gtp6lwo83q" path="res://shaders/red.gdshader" id="2_y7xjd"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_n5x6j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5x6j"]
+shader = ExtResource("2_y7xjd")
+
+[resource]
+script = ExtResource("1_n5x6j")
+editor_text = "shader_type canvas_item;
+// check godot documentation for shaders
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	COLOR = vec4(1.0,1.0,1.0,1.0);
+}
+"
+name = ""
+shader = ExtResource("2_y7xjd")
+material = SubResource("ShaderMaterial_n5x6j")
+base_texture = SubResource("CanvasTexture_n5x6j")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"
