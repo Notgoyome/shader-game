@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://dkq42l7sggrou"]
+
+[ext_resource type="Shader" uid="uid://fl7esp2vovmy" path="res://shaders/clock_1.gdshader" id="1_34qg8"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="2_qh3l4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5cxss"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g06uj"]
+shader = ExtResource("1_34qg8")
+
+[resource]
+script = ExtResource("2_qh3l4")
+editor_text = "shader_type canvas_item;
+const float SIZE = 16.0;
+
+void fragment() {
+}"
+name = ""
+material = SubResource("ShaderMaterial_g06uj")
+base_texture = SubResource("CanvasTexture_5cxss")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

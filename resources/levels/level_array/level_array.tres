@@ -1,0 +1,88 @@
+[gd_resource type="Resource" script_class="LevelArray" load_steps=24 format=3 uid="uid://dkq2oqjkeq0wb"]
+
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="1_0066j"]
+[ext_resource type="Script" uid="uid://dsgb6ojad5w1l" path="res://resources/levels/level_array/level_array.gd" id="2_sr4po"]
+[ext_resource type="Resource" uid="uid://74n16upsfm6p" path="res://resources/levels/red.tres" id="2_vc2ot"]
+[ext_resource type="Resource" uid="uid://bvgi4yxuky5mc" path="res://resources/levels/uv.tres" id="3_j2vu4"]
+[ext_resource type="Resource" uid="uid://b3xs2q637vof3" path="res://resources/levels/strip.tres" id="4_xqn84"]
+[ext_resource type="Resource" uid="uid://df6ahnoroc7u5" path="res://resources/levels/chess.tres" id="5_v8b4p"]
+[ext_resource type="Resource" uid="uid://c880ij8qabfj0" path="res://resources/levels/purple_globs.tres" id="6_b0phr"]
+[ext_resource type="Resource" uid="uid://bqxb65gcmry6q" path="res://resources/levels/upside_down_globs.tres" id="7_oumev"]
+[ext_resource type="Resource" uid="uid://dy2h0mipej38b" path="res://resources/levels/reverse_color_globs.tres" id="8_55x67"]
+[ext_resource type="Resource" uid="uid://bcipikrmipv27" path="res://resources/levels/outline.tres" id="9_k6qnw"]
+[ext_resource type="Resource" uid="uid://1m6xmf3rfdq2" path="res://resources/levels/noisy_globs.tres" id="10_qt6l2"]
+[ext_resource type="Resource" uid="uid://f4lp6geirahs" path="res://resources/levels/clock_0.tres" id="11_mv0oc"]
+[ext_resource type="Resource" uid="uid://dy0spb50qdlx8" path="res://resources/levels/fire.tres" id="13_j2vu4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_j2vu4"]
+texture_filter = 1
+texture_repeat = 2
+
+[sub_resource type="Shader" id="Shader_j2vu4"]
+code = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+uniform sampler2D color_texture : repeat_disable;
+
+void fragment() {
+	vec4 noise_val = texture(noise_texture, vec2(UV.x, UV.y+TIME));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+	COLOR = mix(noise_val, gradiant_color, 0.5);
+	vec4 color = texture(color_texture, vec2(COLOR.r, 0));
+	COLOR = vec4(color.rgb, float(COLOR.r > 0.5));
+	//COLOR =
+
+}"
+
+[sub_resource type="Gradient" id="Gradient_j2vu4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.485014, 0.574932, 0.681199)
+colors = PackedColorArray(0.705882, 0.12549, 0.164706, 1, 0.980392, 0.415686, 0.0392157, 1, 1, 0.835294, 0.254902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xqn84"]
+gradient = SubResource("Gradient_j2vu4")
+
+[sub_resource type="Gradient" id="Gradient_xqn84"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v8b4p"]
+gradient = SubResource("Gradient_xqn84")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b0phr"]
+noise_type = 5
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oumev"]
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_b0phr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2vu4"]
+shader = SubResource("Shader_j2vu4")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_oumev")
+shader_parameter/gradiant_texture = SubResource("GradientTexture2D_v8b4p")
+shader_parameter/color_texture = SubResource("GradientTexture1D_xqn84")
+
+[sub_resource type="Resource" id="Resource_k6qnw"]
+script = ExtResource("1_0066j")
+editor_text = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+uniform sampler2D color_texture : repeat_disable;
+
+void fragment() {
+	vec4 noise_val = texture(noise_texture, vec2(UV.x, UV.y+TIME));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+	COLOR = mix(noise_val, gradiant_color, 0.5);
+	COLOR = vec4(COLOR.rgb, float(COLOR.r > 0.5));
+}"
+name = ""
+material = SubResource("ShaderMaterial_j2vu4")
+base_texture = SubResource("CanvasTexture_j2vu4")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"
+
+[resource]
+script = ExtResource("2_sr4po")
+list_levels = Array[ExtResource("1_0066j")]([ExtResource("2_vc2ot"), ExtResource("3_j2vu4"), ExtResource("4_xqn84"), ExtResource("5_v8b4p"), ExtResource("6_b0phr"), ExtResource("7_oumev"), ExtResource("8_55x67"), ExtResource("9_k6qnw"), ExtResource("10_qt6l2"), ExtResource("11_mv0oc"), ExtResource("13_j2vu4"), SubResource("Resource_k6qnw")])
+metadata/_custom_type_script = "uid://dsgb6ojad5w1l"

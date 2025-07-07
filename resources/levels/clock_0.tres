@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://f4lp6geirahs"]
+
+[ext_resource type="Shader" uid="uid://b2pqq5hbjad1" path="res://shaders/apple.gdshader" id="1_be532"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="2_80cpg"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ef4tg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xniac"]
+shader = ExtResource("1_be532")
+
+[resource]
+script = ExtResource("2_80cpg")
+editor_text = "shader_type canvas_item;
+const float SIZE = 16.0;
+
+void fragment() {
+}"
+name = ""
+material = SubResource("ShaderMaterial_xniac")
+base_texture = SubResource("CanvasTexture_ef4tg")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

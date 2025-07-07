@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Level" load_steps=9 format=3 uid="uid://dy0spb50qdlx8"]
+
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="1_a0raq"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g06uj"]
+texture_filter = 1
+texture_repeat = 2
+
+[sub_resource type="Shader" id="Shader_a0raq"]
+code = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+uniform sampler2D color_texture : repeat_disable;
+
+void fragment() {
+	vec4 noise_val = texture(noise_texture, vec2(UV.x, UV.y+TIME));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+	COLOR = mix(noise_val, gradiant_color, 0.5);
+	COLOR = vec4(COLOR.rgb, float(COLOR.r > 0.5));
+	//COLOR = 
+
+}"
+
+[sub_resource type="Gradient" id="Gradient_gfs3v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bxly1"]
+gradient = SubResource("Gradient_gfs3v")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5cxss"]
+noise_type = 5
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5c3cp"]
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_5cxss")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cxss"]
+shader = SubResource("Shader_a0raq")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_5c3cp")
+shader_parameter/gradiant_texture = SubResource("GradientTexture2D_bxly1")
+
+[resource]
+script = ExtResource("1_a0raq")
+editor_text = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+
+void fragment() {
+	vec4 color = texture(noise_texture, vec2(UV.x, UV.y + 0.0));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+
+}"
+name = ""
+material = SubResource("ShaderMaterial_5cxss")
+base_texture = SubResource("CanvasTexture_g06uj")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

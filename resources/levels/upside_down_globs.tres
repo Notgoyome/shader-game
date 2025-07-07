@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://bqxb65gcmry6q"]
+
+[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="1_ytmsv"]
+[ext_resource type="Shader" uid="uid://doneo32nej4ij" path="res://scenes/main_game/upside_down_globs.gdshader" id="2_bu4ut"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="3_m2cjl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cxss"]
+shader = ExtResource("2_bu4ut")
+
+[resource]
+script = ExtResource("3_m2cjl")
+editor_text = "shader_type canvas_item;
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+	COLOR = color;
+}"
+name = "outline"
+shader = ExtResource("2_bu4ut")
+material = SubResource("ShaderMaterial_5cxss")
+base_texture = ExtResource("1_ytmsv")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

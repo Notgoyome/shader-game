@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhxeqlixamnkx"]
+
+[ext_resource type="Script" uid="uid://cj7op8xbuy0hk" path="res://autoloads/global.gd" id="1_5eb1e"]
+[ext_resource type="Resource" uid="uid://dkq2oqjkeq0wb" path="res://resources/levels/level_array/level_array.tres" id="2_r8sav"]
+
+[node name="GlobalTest" type="Node"]
+script = ExtResource("1_5eb1e")
+level_array = ExtResource("2_r8sav")

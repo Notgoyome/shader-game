@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://df6ahnoroc7u5"]
+
+[ext_resource type="Shader" uid="uid://8ijm12afgnnm" path="res://shaders/chess.gdshader" id="1_i34mf"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="2_y4if0"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8dyyo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5dpwn"]
+shader = ExtResource("1_i34mf")
+
+[resource]
+script = ExtResource("2_y4if0")
+editor_text = "shader_type canvas_item;
+// check godot documentation for shaders
+const float SIZE = 16.0;
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	// do you know it ?? You can use % aka modulo
+	vec2 pixel_position = SIZE * UV;
+	COLOR = vec4(1.0,1.0,1.0,1.0);
+}
+"
+name = ""
+shader = ExtResource("1_i34mf")
+material = SubResource("ShaderMaterial_5dpwn")
+base_texture = SubResource("CanvasTexture_8dyyo")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

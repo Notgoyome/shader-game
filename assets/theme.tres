@@ -1,24 +1,10 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c6v2fikpfv1ev"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c6v2fikpfv1ev"]
 
 [ext_resource type="Texture2D" uid="uid://dgr4v1xxubvs2" path="res://assets/images/nine_patch/button.png" id="1_5x3i2"]
 [ext_resource type="Texture2D" uid="uid://bmga76lmh8nre" path="res://assets/images/nine_patch/button_disabled.png" id="1_wl1kw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wl1kw"]
 texture = ExtResource("1_wl1kw")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 40.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wycmq"]
-texture = ExtResource("1_5x3i2")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 40.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x2pqw"]
-texture = ExtResource("1_5x3i2")
 texture_margin_left = 20.0
 texture_margin_top = 20.0
 texture_margin_right = 20.0
@@ -40,7 +26,5 @@ texture_margin_bottom = 40.0
 
 [resource]
 Button/styles/disabled = SubResource("StyleBoxTexture_wl1kw")
-Button/styles/focus = SubResource("StyleBoxTexture_wycmq")
-Button/styles/hover = SubResource("StyleBoxTexture_x2pqw")
 Button/styles/normal = SubResource("StyleBoxTexture_lu33j")
 Button/styles/pressed = SubResource("StyleBoxTexture_e8htd")

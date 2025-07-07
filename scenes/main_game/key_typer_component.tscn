@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjrf1s1wqyj1l"]
+
+[ext_resource type="Script" uid="uid://disry4wso27qu" path="res://scenes/main_game/key_typer_component.gd" id="1_tkrgx"]
+[ext_resource type="AudioStream" uid="uid://ds72v1smu8xvg" path="res://assets/sounds/key_in.mp3" id="2_chm5g"]
+[ext_resource type="AudioStream" uid="uid://mye4h671a8ud" path="res://assets/sounds/key_out.mp3" id="3_itple"]
+
+[node name="KeyTyperComponent" type="Node"]
+script = ExtResource("1_tkrgx")
+
+[node name="KeyIn" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_chm5g")
+max_polyphony = 4
+
+[node name="KeyOut" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_itple")
+max_polyphony = 4

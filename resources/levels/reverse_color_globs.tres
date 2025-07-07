@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://dy2h0mipej38b"]
+
+[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="1_8hudc"]
+[ext_resource type="Shader" uid="uid://crwo48xdlvvgc" path="res://shaders/reverse_colors_globs.gdshader" id="2_pqppv"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="3_0stml"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xg5l4"]
+shader = ExtResource("2_pqppv")
+
+[resource]
+script = ExtResource("3_0stml")
+editor_text = "shader_type canvas_item;
+
+void fragment() {
+}"
+name = "outline"
+shader = ExtResource("2_pqppv")
+material = SubResource("ShaderMaterial_xg5l4")
+base_texture = ExtResource("1_8hudc")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

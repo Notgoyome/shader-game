@@ -22,11 +22,20 @@ class_name MainGame
 
 		my_shader.size = value
 		target_shader.size = value
+
+
+var change_level : bool = true
 signal shader_changed
 
 func _ready() -> void:
+	Global.set_game(
+		my_shader,
+		target_shader,
+		code_editor
+	)
 	set_new_shader()
-	pass
+	if change_level:
+		Global.change_level(Global.get_level())
 
 func _on_text_editor_text_changed() -> void:
 	set_new_shader()

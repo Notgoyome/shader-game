@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Level" load_steps=5 format=3 uid="uid://bvgi4yxuky5mc"]
+
+[ext_resource type="Shader" uid="uid://bjv5sqem6r3we" path="res://shaders/uv.gdshader" id="1_2o8qe"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="2_hobrd"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ece3q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ip0mq"]
+shader = ExtResource("1_2o8qe")
+
+[resource]
+script = ExtResource("2_hobrd")
+editor_text = "shader_type canvas_item;
+// check godot documentation for shaders
+
+void fragment() {
+	UV; // uv gives the actual position of the pixel in (0,0) to (1,1)
+	// Called for every pixel the material is visible on.
+	COLOR = vec4(1.0,1.0,1.0,1.0);
+}
+"
+name = ""
+shader = ExtResource("1_2o8qe")
+material = SubResource("ShaderMaterial_ip0mq")
+base_texture = SubResource("CanvasTexture_ece3q")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

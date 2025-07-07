@@ -1,4 +1,5 @@
 extends Node
+class_name ComparerComponent
 
 @export var source_rect: Viewport
 @export var target_rect: Viewport

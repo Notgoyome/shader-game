@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://0ciaw1bj41ml"]
+
+[sub_resource type="Shader" id="Shader_qq24g"]
+code = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+uniform sampler2D color_texture : repeat_disable;
+
+void fragment() {
+	vec4 noise_val = texture(noise_texture, vec2(UV.x, UV.y+TIME));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+	COLOR = mix(noise_val, gradiant_color, 0.5);
+	//vec4 color = texture(color_texture, vec2(COLOR.r, 0));
+	COLOR = vec4(COLOR.rgb, float(COLOR.r > 0.5));
+	//COLOR = 
+
+}"
+
+[sub_resource type="Gradient" id="Gradient_gfs3v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bxly1"]
+gradient = SubResource("Gradient_gfs3v")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5cxss"]
+noise_type = 5
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5c3cp"]
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_5cxss")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfs3v"]
+shader = SubResource("Shader_qq24g")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_5c3cp")
+shader_parameter/gradiant_texture = SubResource("GradientTexture2D_bxly1")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_gfs3v")
+offset_right = 512.0
+offset_bottom = 512.0

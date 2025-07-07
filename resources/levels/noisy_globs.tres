@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Level" load_steps=7 format=3 uid="uid://1m6xmf3rfdq2"]
+
+[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="1_84bl5"]
+[ext_resource type="Shader" uid="uid://b08sb4a6lbh75" path="res://shaders/right_noise.gdshader" id="2_parjp"]
+[ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="3_bjl5h"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nkame"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lt8ol"]
+noise = SubResource("FastNoiseLite_nkame")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwnsx"]
+shader = ExtResource("2_parjp")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_lt8ol")
+
+[resource]
+script = ExtResource("3_bjl5h")
+editor_text = "shader_type canvas_item;
+const float SIZE = 16.0;
+
+void fragment() {
+	float pixel_pos_normalized = 1.0 / SIZE;
+    vec4 color = texture(TEXTURE,UV + 4.0 * pixel_pos_normalized);
+	COLOR = color;
+}"
+name = "outline"
+material = SubResource("ShaderMaterial_pwnsx")
+base_texture = ExtResource("1_84bl5")
+metadata/_custom_type_script = "uid://dygt2ra6plsde"

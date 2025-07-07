@@ -1,35 +1,97 @@
-[gd_scene load_steps=45 format=3 uid="uid://ct8p20kf2yfab"]
+[gd_scene load_steps=43 format=3 uid="uid://ct8p20kf2yfab"]
 
 [ext_resource type="Script" uid="uid://df3pm3c7odloe" path="res://scenes/main_game/main_game.gd" id="1_jrcp4"]
-[ext_resource type="Shader" uid="uid://bjv5sqem6r3we" path="res://shaders/uv.gdshader" id="2_4itb4"]
+[ext_resource type="Script" uid="uid://4abda42i3gyr" path="res://scenes/main_game/debug/debug_helper.gd" id="2_ofw88"]
 [ext_resource type="StyleBox" uid="uid://blj5j32jw3b6f" path="res://assets/panel.tres" id="3_5dpwn"]
-[ext_resource type="Shader" uid="uid://doneo32nej4ij" path="res://scenes/main_game/upside_down_globs.gdshader" id="3_lk3h4"]
+[ext_resource type="Resource" uid="uid://dkq2oqjkeq0wb" path="res://resources/levels/level_array/level_array.tres" id="3_ofw88"]
 [ext_resource type="Script" uid="uid://4auslm5a78b6" path="res://scenes/main_game/score.gd" id="4_4itb4"]
 [ext_resource type="Theme" uid="uid://c6v2fikpfv1ev" path="res://assets/theme.tres" id="4_ofw88"]
 [ext_resource type="Script" uid="uid://cmbs3ussphild" path="res://scenes/main_game/comparer_component.gd" id="4_vqxfw"]
+[ext_resource type="PackedScene" uid="uid://bjrf1s1wqyj1l" path="res://scenes/main_game/key_typer_component.tscn" id="5_hh8jm"]
 [ext_resource type="Script" uid="uid://bd35a332xs07c" path="res://scenes/main_game/next_button.gd" id="5_odwdu"]
 [ext_resource type="CodeHighlighter" uid="uid://csopn3wtwcpax" path="res://assets/godot_shader_repaired.tres" id="5_xg5l4"]
-[ext_resource type="Shader" uid="uid://cfa20wkvjwx88" path="res://shaders/strip.gdshader" id="7_ece3q"]
-[ext_resource type="Shader" uid="uid://8ijm12afgnnm" path="res://shaders/chess.gdshader" id="8_6mgeo"]
 [ext_resource type="Script" uid="uid://dygt2ra6plsde" path="res://resources/levels/level.gd" id="9_6mgeo"]
 [ext_resource type="Resource" uid="uid://74n16upsfm6p" path="res://resources/levels/red.tres" id="10_4l6km"]
-[ext_resource type="Shader" uid="uid://crwo48xdlvvgc" path="res://shaders/reverse_colors_globs.gdshader" id="11_8dyyo"]
-[ext_resource type="Texture2D" uid="uid://dk6tybk7tqcva" path="res://assets/images/globs.png" id="11_lk3h4"]
-[ext_resource type="Texture2D" uid="uid://c7qaytagv8vho" path="res://assets/images/globs_normaL.png" id="12_fsiif"]
-[ext_resource type="Shader" uid="uid://c71n53da8t7ec" path="res://shaders/globs_purple.gdshader" id="12_lk3h4"]
-[ext_resource type="Resource" uid="uid://xhb47v31b7w4" path="res://scenes/main_game/purple_globs.tres" id="15_ofw88"]
+[ext_resource type="Resource" uid="uid://bvgi4yxuky5mc" path="res://resources/levels/uv.tres" id="11_ofw88"]
+[ext_resource type="Resource" uid="uid://b3xs2q637vof3" path="res://resources/levels/strip.tres" id="12_ofw88"]
+[ext_resource type="Resource" uid="uid://df6ahnoroc7u5" path="res://resources/levels/chess.tres" id="13_ofw88"]
+[ext_resource type="Resource" uid="uid://c880ij8qabfj0" path="res://resources/levels/purple_globs.tres" id="14_5dpwn"]
+[ext_resource type="Resource" uid="uid://dy2h0mipej38b" path="res://resources/levels/reverse_color_globs.tres" id="15_xg5l4"]
+[ext_resource type="Resource" uid="uid://bqxb65gcmry6q" path="res://resources/levels/upside_down_globs.tres" id="16_5dpwn"]
 [ext_resource type="Script" uid="uid://gq2koma2ojj4" path="res://scenes/main_game/text_editor.gd" id="17_1xfs6"]
 [ext_resource type="Resource" uid="uid://bcipikrmipv27" path="res://resources/levels/outline.tres" id="19_ofw88"]
+[ext_resource type="Script" uid="uid://cxq6v7ffbe21o" path="res://scenes/main_game/skip_button.gd" id="20_5cxss"]
 [ext_resource type="Resource" uid="uid://lfdocou3rvlm" path="res://resources/levels/noise.tres" id="20_xg5l4"]
 
-[sub_resource type="Shader" id="Shader_xg5l4"]
+[sub_resource type="Shader" id="Shader_5cxss"]
+code = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5c3cp"]
-render_priority = 0
-shader = SubResource("Shader_xg5l4")
+void fragment() {
+	vec4 color = texture(noise_texture, vec2(UV.x, UV.y + 0.0));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofw88"]
-shader = ExtResource("12_lk3h4")
+}"
+
+[sub_resource type="Gradient" id="Gradient_5c3cp"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hh8jm"]
+gradient = SubResource("Gradient_5c3cp")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g06uj"]
+noise_type = 5
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qq24g"]
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_g06uj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lp5od"]
+shader = SubResource("Shader_5cxss")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_qq24g")
+shader_parameter/gradiant_texture = SubResource("GradientTexture2D_hh8jm")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g06uj"]
+texture_filter = 1
+texture_repeat = 2
+
+[sub_resource type="Shader" id="Shader_a0raq"]
+code = "shader_type canvas_item;
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
+uniform sampler2D color_texture : repeat_disable;
+
+void fragment() {
+	vec4 noise_val = texture(noise_texture, vec2(UV.x, UV.y+TIME));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+	COLOR = mix(noise_val, gradiant_color, 0.5);
+	COLOR = vec4(COLOR.rgb, float(COLOR.r > 0.5));
+}"
+
+[sub_resource type="Gradient" id="Gradient_gfs3v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bxly1"]
+gradient = SubResource("Gradient_gfs3v")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5cxss"]
+noise_type = 5
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5c3cp"]
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_5cxss")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cxss"]
+shader = SubResource("Shader_a0raq")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_5c3cp")
+shader_parameter/gradiant_texture = SubResource("GradientTexture2D_bxly1")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5dpwn"]
 
@@ -40,108 +102,6 @@ shader = ExtResource("12_lk3h4")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cxss"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5c3cp"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ece3q"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ip0mq"]
-shader = ExtResource("2_4itb4")
-
-[sub_resource type="Resource" id="Resource_4l6km"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-// check godot documentation for shaders
-
-void fragment() {
-	UV; // uv gives the actual position of the pixel in (0,0) to (1,1)
-	// Called for every pixel the material is visible on.
-	COLOR = vec4(1.0,1.0,1.0,1.0);
-}
-"
-name = ""
-shader = ExtResource("2_4itb4")
-material = SubResource("ShaderMaterial_ip0mq")
-base_texture = SubResource("CanvasTexture_ece3q")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_4l6km"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xfs6"]
-shader = ExtResource("7_ece3q")
-
-[sub_resource type="Resource" id="Resource_8dyyo"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-// check godot documentation for shaders
-const float SIZE = 16.0;
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-	// do you know it ?? You can use % aka modulo
-	vec2 pixel_position = SIZE * UV;
-	COLOR = vec4(1.0,1.0,1.0,1.0);
-}
-"
-name = ""
-shader = ExtResource("7_ece3q")
-material = SubResource("ShaderMaterial_1xfs6")
-base_texture = SubResource("CanvasTexture_4l6km")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_8dyyo"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5dpwn"]
-shader = ExtResource("8_6mgeo")
-
-[sub_resource type="Resource" id="Resource_lk3h4"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-// check godot documentation for shaders
-const float SIZE = 16.0;
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-	// do you know it ?? You can use % aka modulo
-	vec2 pixel_position = SIZE * UV;
-	COLOR = vec4(1.0,1.0,1.0,1.0);
-}
-"
-name = ""
-shader = ExtResource("8_6mgeo")
-material = SubResource("ShaderMaterial_5dpwn")
-base_texture = SubResource("CanvasTexture_8dyyo")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xg5l4"]
-shader = ExtResource("11_8dyyo")
-
-[sub_resource type="Resource" id="Resource_ip0mq"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-
-void fragment() {
-}"
-name = "outline"
-shader = ExtResource("11_8dyyo")
-material = SubResource("ShaderMaterial_xg5l4")
-base_texture = ExtResource("12_fsiif")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cxss"]
-shader = ExtResource("3_lk3h4")
-
-[sub_resource type="Resource" id="Resource_657ci"]
-script = ExtResource("9_6mgeo")
-editor_text = "shader_type canvas_item;
-
-void fragment() {
-    vec4 color = texture(TEXTURE, UV);
-	COLOR = color;
-}"
-name = "outline"
-shader = ExtResource("3_lk3h4")
-material = SubResource("ShaderMaterial_5cxss")
-base_texture = ExtResource("12_fsiif")
-metadata/_custom_type_script = "uid://dygt2ra6plsde"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vqxfw"]
 viewport_path = NodePath("SourceViewport")
@@ -159,6 +119,23 @@ grow_vertical = 2
 script = ExtResource("1_jrcp4")
 canvas_size = Vector2(16, 16)
 
+[node name="DebugHelper" type="Node" parent="." node_paths=PackedStringArray("main_game", "code_editor", "source_text", "target_text")]
+script = ExtResource("2_ofw88")
+main_game = NodePath("..")
+level_array = ExtResource("3_ofw88")
+force_level = true
+debug_index = 10
+code_editor = NodePath("../Panel/HBoxContainer/Panel2/CodeEditor")
+source_text = NodePath("../SourceViewport/MyShader")
+target_text = NodePath("../TargetViewport/TargetShader")
+
+[node name="ComparerComponent" type="Node" parent="." node_paths=PackedStringArray("source_rect", "target_rect")]
+script = ExtResource("4_vqxfw")
+source_rect = NodePath("../SourceViewport")
+target_rect = NodePath("../TargetViewport")
+
+[node name="KeyTyperComponent" parent="." instance=ExtResource("5_hh8jm")]
+
 [node name="SourceViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true
 canvas_item_default_texture_filter = 0
@@ -166,7 +143,7 @@ size = Vector2i(16, 16)
 
 [node name="MyShader" type="TextureRect" parent="SourceViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_5c3cp")
+material = SubResource("ShaderMaterial_lp5od")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -180,7 +157,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("11_lk3h4")
+texture = SubResource("CanvasTexture_g06uj")
 
 [node name="TargetViewport" type="SubViewport" parent="."]
 unique_name_in_owner = true
@@ -189,7 +166,7 @@ size = Vector2i(16, 16)
 
 [node name="TargetShader" type="TextureRect" parent="TargetViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_ofw88")
+material = SubResource("ShaderMaterial_5cxss")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -203,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("11_lk3h4")
+texture = SubResource("CanvasTexture_g06uj")
 
 [node name="Panel" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -261,13 +238,14 @@ theme_override_styles/read_only = SubResource("StyleBoxEmpty_xg5l4")
 theme_override_styles/completion = SubResource("StyleBoxEmpty_5cxss")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5c3cp")
 text = "shader_type canvas_item;
-const vec3 PURPLE = vec3(0.625, 0.231, 0.894);
-const vec3 DARK_PURPLE = vec3(0.294, 0.184, 0.566);
+uniform sampler2D noise_texture : repeat_enable;
+uniform sampler2D gradiant_texture : repeat_disable;
 
 void fragment() {
-// althought it's not recommended, you can use \"if\" if you need it :>
-}
-"
+	vec4 color = texture(noise_texture, vec2(UV.x, UV.y + 0.0));
+	vec4 gradiant_color = texture(gradiant_texture, UV);
+
+}"
 minimap_draw = true
 syntax_highlighter = ExtResource("5_xg5l4")
 highlight_all_occurrences = true
@@ -297,11 +275,25 @@ disabled = true
 text = "NEXT"
 script = ExtResource("5_odwdu")
 comparer_component = NodePath("../../../../ComparerComponent")
-list_levels = Array[ExtResource("9_6mgeo")]([ExtResource("10_4l6km"), SubResource("Resource_4l6km"), SubResource("Resource_8dyyo"), SubResource("Resource_lk3h4"), ExtResource("15_ofw88"), SubResource("Resource_ip0mq"), SubResource("Resource_657ci"), ExtResource("19_ofw88"), ExtResource("20_xg5l4")])
+list_levels = Array[ExtResource("9_6mgeo")]([ExtResource("10_4l6km"), ExtResource("11_ofw88"), ExtResource("12_ofw88"), ExtResource("13_ofw88"), ExtResource("14_5dpwn"), ExtResource("15_xg5l4"), ExtResource("16_5dpwn"), ExtResource("19_ofw88"), ExtResource("20_xg5l4")])
 source_text = NodePath("../../../../SourceViewport/MyShader")
 target_text = NodePath("../../../../TargetViewport/TargetShader")
 code_editor = NodePath("../CodeEditor")
-debug_index = 4
+
+[node name="SkipButton" type="Button" parent="Panel/HBoxContainer/Panel2" node_paths=PackedStringArray("comparer_component")]
+visible = false
+layout_mode = 0
+offset_left = 1208.0
+offset_top = 856.0
+offset_right = 1344.0
+offset_bottom = 992.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_ofw88")
+theme_override_font_sizes/font_size = 64
+text = "SKIP"
+script = ExtResource("20_5cxss")
+comparer_component = NodePath("../../../../ComparerComponent")
 
 [node name="Preview" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2
@@ -340,14 +332,10 @@ texture = SubResource("ViewportTexture_4itb4")
 layout_mode = 2
 color_mode = 2
 
-[node name="ComparerComponent" type="Node" parent="." node_paths=PackedStringArray("source_rect", "target_rect")]
-script = ExtResource("4_vqxfw")
-source_rect = NodePath("../SourceViewport")
-target_rect = NodePath("../TargetViewport")
-
 [connection signal="shader_changed" from="." to="ComparerComponent" method="_on_control_shader_changed"]
-[connection signal="text_changed" from="Panel/HBoxContainer/Panel2/CodeEditor" to="." method="_on_text_editor_text_changed"]
-[connection signal="pressed" from="Panel/HBoxContainer/Panel2/NextButton" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_pressed"]
 [connection signal="compare_done" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/Score" method="_on_comparer_component_compare_done"]
 [connection signal="compare_done" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_comparer_component_compare_done"]
 [connection signal="on_percentage_all" from="ComparerComponent" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_comparer_component_on_percentage_all"]
+[connection signal="text_changed" from="Panel/HBoxContainer/Panel2/CodeEditor" to="." method="_on_text_editor_text_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Panel2/NextButton" to="Panel/HBoxContainer/Panel2/NextButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Panel2/SkipButton" to="Panel/HBoxContainer/Panel2/SkipButton" method="_on_pressed"]
